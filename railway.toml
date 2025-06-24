@@ -17,11 +17,11 @@ source = "postgres:14"
 # Payload Configuration - Generated secure secret key
 PAYLOAD_SECRET = "0066a0e14b3ce2e83fc2876bde05c4fe5696e1b000cc0aee33d3d01db34da5a5"
 
-# Database Configuration (Railway will auto-populate when PostgreSQL service is added)
+# Database Configuration (Railway will auto-populate these when PostgreSQL service is added)
 DATABASE_URI = "${{ Postgres.DATABASE_URL }}"
 
 # Server Configuration (Railway auto-populates the domain)
-NEXT_PUBLIC_SERVER_URL = "${{ RAILWAY_PUBLIC_DOMAIN }}"
+NEXT_PUBLIC_SERVER_URL = "https://${{ RAILWAY_PUBLIC_DOMAIN }}"
 NODE_ENV = "production"
 PORT = "3000"
 HOSTNAME = "0.0.0.0"

@@ -18,7 +18,19 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 // Support multiple database environment variable names for different deployment platforms
-const databaseUri = process.env.DATABASE_URI || process.env.POSTGRES_URL || process.env.DATABASE_URL || ''
+const databaseUri = process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL || ''
+
+// Support multiple secret key environment variable names
+const payloadSecret = process.env.PAYLOAD_SECRET || ''
+
+// Ensure we have required environment variables
+if (!payloadSecret) {
+  throw new Error('PAYLOAD_SECRET environment variable is required')
+}
+
+if (!databaseUri) {
+  throw new Error('DATABASE_URI (or DATABASE_URL) environment variable is required')
+}
 
 export default buildConfig({
   admin: {
@@ -29,7 +41,7 @@ export default buildConfig({
   },
   collections: [Users, Media, Sites, Pages, Blocks, Clients],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: payloadSecret,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
