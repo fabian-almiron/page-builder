@@ -61,9 +61,9 @@ export default buildConfig({
     pool: {
       connectionString: databaseUri || 'postgresql://localhost:5432/dummy_build_db',
     },
-    // Enable automatic database migrations
-    migrationDir: path.resolve(dirname, 'migrations'),
-    push: true, // Auto-push schema changes to database
+    // Temporarily disable auto-migrations for debugging
+    // migrationDir: path.resolve(dirname, 'migrations'),
+    // push: true, // Auto-push schema changes to database
   }),
   sharp,
   plugins: [

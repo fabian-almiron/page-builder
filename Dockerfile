@@ -65,5 +65,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# Use our custom start script that runs migrations first
-CMD ["npm", "run", "start:prod"] 
+# Start the application directly for now (will add migrations back once basic setup works)
+CMD ["npm", "run", "start"] 
