@@ -28,7 +28,9 @@ if (!payloadSecret) {
   throw new Error('PAYLOAD_SECRET environment variable is required')
 }
 
-if (!databaseUri) {
+// For build process, allow empty database URI (will be available at runtime)
+const isBuilding = process.env.NODE_ENV !== 'production' || process.argv.includes('build')
+if (!databaseUri && !isBuilding) {
   throw new Error('DATABASE_URI (or DATABASE_URL) environment variable is required')
 }
 
@@ -47,7 +49,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: databaseUri,
+      connectionString: databaseUri || 'postgresql://localhost:5432/dummy_build_db',
     },
   }),
   sharp,
