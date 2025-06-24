@@ -21,12 +21,12 @@ COPY cms/ ./
 # Disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Environment variables needed for build process
-# These will be passed from Railway during build
-ARG PAYLOAD_SECRET
-ARG DATABASE_URI
-ARG NEXT_PUBLIC_SERVER_URL
-ARG NODE_ENV=production
+# Environment variables needed for build process with defaults
+# Railway will pass these as build args, but we provide defaults for local builds
+ARG PAYLOAD_SECRET="0066a0e14b3ce2e83fc2876bde05c4fe5696e1b000cc0aee33d3d01db34da5a5"
+ARG DATABASE_URI="postgresql://localhost:5432/dummy_build_db"
+ARG NEXT_PUBLIC_SERVER_URL="http://localhost:3000"
+ARG NODE_ENV="production"
 
 # Set environment variables for build
 ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
