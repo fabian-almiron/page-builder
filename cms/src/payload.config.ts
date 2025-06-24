@@ -23,6 +23,16 @@ const databaseUri = process.env.DATABASE_URI || process.env.DATABASE_URL || proc
 // Support multiple secret key environment variable names
 const payloadSecret = process.env.PAYLOAD_SECRET || ''
 
+// Get server URL with proper fallback
+const getServerURL = () => {
+  const url = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+  // Ensure the URL is properly formatted
+  if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+    return `https://${url}`
+  }
+  return url
+}
+
 // Ensure we have required environment variables
 if (!payloadSecret) {
   throw new Error('PAYLOAD_SECRET environment variable is required')
@@ -51,6 +61,9 @@ export default buildConfig({
     pool: {
       connectionString: databaseUri || 'postgresql://localhost:5432/dummy_build_db',
     },
+    // Enable automatic database migrations
+    migrationDir: path.resolve(dirname, 'migrations'),
+    push: true, // Auto-push schema changes to database
   }),
   sharp,
   plugins: [
@@ -58,5 +71,5 @@ export default buildConfig({
     // storage-adapter-placeholder
   ],
   // Configure server settings for Railway deployment
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL: getServerURL(),
 })
