@@ -55,12 +55,8 @@ RUN mkdir -p ./public && chown nextjs:nodejs ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-# Copy the public directory
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+# Copy the complete application with node_modules for migration support
+COPY --from=builder --chown=nextjs:nodejs /app ./
 
 USER nextjs
 
@@ -69,6 +65,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD ["node", "server.js"] 
+# Use the production start script that runs migrations first
+CMD ["npm", "run", "start:prod"] 

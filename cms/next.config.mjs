@@ -3,7 +3,6 @@ import { withPayload } from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Your Next.js config here
-  output: 'standalone',
   // Skip static optimization for API routes during build
   trailingSlash: false,
   // Don't try to pre-render API routes during build

@@ -14,8 +14,9 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
+    "generate:schema": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create --name initial_schema",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "start:prod": "npm run migrate || echo 'Migration failed, continuing...' && npm run start"
+    "start:prod": "echo 'Running database migrations...' && npm run migrate && echo 'Starting application...' && npm run start"
   },
   "dependencies": {
     "@payloadcms/next": "3.43.0",
